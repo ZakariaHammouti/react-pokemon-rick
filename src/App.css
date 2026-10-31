@@ -1,0 +1,38 @@
+/* Allgemeine Einstellungen */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 20px 40px;
+    background-color: #222;
+}
+
+/* Links */
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Wenn man mit der Maus über einen Link fährt */
+nav a:hover {
+    color: #61dafb;
+}
+
+/* Aktuell ausgewählter Link */
+nav a.active {
+    color: #61dafb;
+    padding-bottom: 5px;
+}
