@@ -1,6 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
-import "../styles/CommonCard.css";
+import "../styles/PokemonPage.css";
+import {useLocation, useNavigate} from "react-router";
 
 type PokemonPageProps = {
     data: any[];
@@ -27,6 +28,7 @@ export default function PokemonPage({
                                         setLoading
                                     }: PokemonPageProps) {
 
+    const navigate = useNavigate();
 
     async function loadPokemon(page: number) {
         const limit = 20;
@@ -87,6 +89,15 @@ export default function PokemonPage({
                                 src={item.sprites.other["official-artwork"].front_default}
                                 alt={item.name}
                             />
+                            <button
+                                className="details-button"
+                                onClick={() =>
+                                    navigate(`/pokemondetails/${item.id}`, {
+                                        state: item
+                                    })}
+                            >
+                                More Details
+                            </button>
                         </article>
                     ))}
                 </section>

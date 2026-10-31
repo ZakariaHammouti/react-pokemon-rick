@@ -1,10 +1,14 @@
 import './App.css'
 import NavigationBar from "./NavigationBar.tsx";
-import {Route, Routes} from "react-router";
-import Overview from "./components/Overview.tsx"
+import {Route, Routes} from "react-router"
 import {useState} from "react";
 import PokemonPage from "./components/PokemonPage";
 import RickAndMortyPage from "./components/RickAndMortyPage";
+import RickAndMortyDetails from "./components/RickAndMortyDetails.tsx";
+import PokemonDetails from "./components/PokemonDetails.tsx"
+import Overview from "./components/Overview.tsx";
+import PokemonFavorites from "./components/PokemonFavorits.tsx";
+import RickAndMortyFavorites from "./components/RickAndMortyFavorits.tsx";
 
 function App() {
 
@@ -19,11 +23,16 @@ function App() {
     const [rickPage, setRickPage] = useState(1);
     const [rickLoading, setRickLoading] = useState(false);
 
+
+    const [pokemonFavorites, setPokemonFavorites] = useState<any[]>([]);
+    const [rickFavorites, setRickFavorites] = useState<any[]>([]);
+
     return (
         <>
             <NavigationBar/>
 
             <Routes>
+                <Route path="/" element={<Overview/>}/>
                 <Route
                     path="/pokemon"
                     element={
@@ -56,8 +65,34 @@ function App() {
                     }
                 />
 
-                <Route path={"/pokemondetails/:id"} element={<h2>Pokemon Details</h2>}/>
-                <Route path={"/rickandmortydetails/:id"} element={<h2>Rick and Morty Details</h2>}/>
+                <Route path={"/rickandmortydetails/:id"} element={<RickAndMortyDetails
+                    rickFavorites={rickFavorites}
+                    setRickFavorites={setRickFavorites}
+                />
+                }/>
+                <Route path={"/pokemondetails/:id"} element={<PokemonDetails
+                    pokemonFavorites={pokemonFavorites}
+                    setPokemonFavorites={setPokemonFavorites}/>
+                }/>
+                <Route
+                    path="/pokemonfavorites"
+                    element={
+                        <PokemonFavorites
+                            pokemonFavorites={pokemonFavorites}
+                            setPokemonFavorites={setPokemonFavorites}
+                        />
+                    }
+                />
+
+                <Route
+                    path="/rickandmortyfavorites"
+                    element={
+                        <RickAndMortyFavorites
+                            rickFavorites={rickFavorites}
+                            setRickFavorites={setRickFavorites}
+                        />
+                    }
+                />
             </Routes>
         </>
     )

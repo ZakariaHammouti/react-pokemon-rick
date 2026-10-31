@@ -1,6 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
-import "../styles/CommonCard.css";
+import "../styles/RickAndMorty.css";
+import {useLocation, useNavigate} from "react-router";
 
 type RickAndMortyPageProps = {
     data: any[];
@@ -12,6 +13,7 @@ type RickAndMortyPageProps = {
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 export default function RickAndMortyPage({
                                              data,
                                              setData,
@@ -23,9 +25,12 @@ export default function RickAndMortyPage({
                                              setLoading
                                          }: RickAndMortyPageProps) {
 
+    const navigate = useNavigate();
+
     function loadRickAndMorty(page: number) {
         setLoading(true);
         setError("");
+
 
         axios.get(
             `https://rickandmortyapi.com/api/character?page=${page}`
@@ -67,8 +72,18 @@ export default function RickAndMortyPage({
                         <article className="card" key={item.id}>
                             <h3>{item.name}</h3>
                             <img src={item.image} alt={item.name} loading="lazy"/>
+                            <button
+                                className="details-button"
+                                onClick={() =>
+                                    navigate(`/rickandmortydetails/${item.id}`, {
+                                        state: item
+                                    })}
+                            >
+                                More Details
+                            </button>
                         </article>
                     ))}
+
                 </section>
             )}
         </>

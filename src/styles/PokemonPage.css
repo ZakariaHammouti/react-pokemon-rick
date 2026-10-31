@@ -1,0 +1,44 @@
+.pokemon-details {
+    padding: 30px;
+    text-align: center;
+}
+
+.pokemon-details h2 {
+    font-size: 32px;
+    margin: 20px 0;
+    text-transform: capitalize;
+}
+
+.pokemon-details img {
+    width: 350px;
+    height: 350px;
+    object-fit: contain;
+}
+
+.pokemon-details .card-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.pokemon-details .card {
+    min-height: 130px;
+}
+
+.pokemon-details .card h3 {
+    font-size: 22px;
+}
+
+.pokemon-details .card p {
+    font-size: 18px;
+}
+
+.back-button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+}

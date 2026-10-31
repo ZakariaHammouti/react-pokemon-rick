@@ -12,8 +12,8 @@ export default function NavigationBar() {
             <NavLink to={"/"}>Overview</NavLink>
             <NavLink to={"/pokemon"}>Pokemon</NavLink>
             <NavLink to={"/rickandmorty"}>RickAndMorty</NavLink>
-            <NavLink to={"/pokemondetails/:id"}>Pokemon Details</NavLink>
-            <NavLink to={"/rickandmortydetails/:id"}>RickAndMorty Details</NavLink>
+            <NavLink to="/pokemonfavorites">Pokemon Favorites</NavLink>
+            <NavLink to="/rickandmortyfavorites">Rick and Morty Favorites</NavLink>
         </nav>
     )
 }
