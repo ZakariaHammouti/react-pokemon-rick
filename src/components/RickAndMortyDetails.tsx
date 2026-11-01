@@ -1,5 +1,6 @@
 import {useLocation, useNavigate} from "react-router";
 import "../styles/RickAndMorty.css";
+import axios from "axios";
 
 type Character = {
     id: number;
@@ -15,7 +16,6 @@ type Character = {
     };
     image: string;
 };
-
 
 type RickAndMortyDetailsProps = {
     rickFavorites: any[];
@@ -86,16 +86,39 @@ export default function RickAndMortyDetails({
                 </button>
                 <button
                     onClick={() => {
-                        setRickFavorites((prev) => {
-                            if (prev.some((item) => item.id === character.id)) {
-                                return prev;
-                            }
+                        if (rickFavorites.some(
+                            (item) => item.characterId === String(character.id)
+                        )) {
+                            return;
+                        }
 
-                            return [...prev, character];
-                        });
+                        const favoriteData = {
+                            characterId: String(character.id),
+                            name: character.name,
+                            status: character.status,
+                            species: character.species,
+                            gender: character.gender,
+                            image: character.image
+                        };
+
+                        axios.post(
+                            "http://localhost:8080/api/rick/collection",
+                            favoriteData
+                        )
+                            .then((response) => {
+                                console.log("Backend-Antwort:", response.data);
+                                console.log("Charakter-ID:", character.id);
+                                console.log("Rick-&-Morty-Favorit gespeichert:", response.data);
+                                setRickFavorites((prev) => [...prev, response.data]);
+                            })
+                            .catch((error) => {
+                                console.log("Fehler beim Speichern:", error);
+                            });
                     }}
                 >
-                    {rickFavorites.some((item) => item.id === character.id)
+                    {rickFavorites.some(
+                        (item) => item.characterId === String(character.id)
+                    )
                         ? "Bereits Favorit"
                         : "Als Favorit speichern"}
                 </button>

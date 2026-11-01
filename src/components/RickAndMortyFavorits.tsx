@@ -1,3 +1,5 @@
+import axios from "axios";
+
 type RickFavoritesProps = {
     rickFavorites: any[];
     setRickFavorites: React.Dispatch<React.SetStateAction<any[]>>;
@@ -23,9 +25,15 @@ export default function RickAndMortyFavorites({
                         />
                         <button
                             onClick={() => {
-                                setRickFavorites((prev) =>
-                                    prev.filter((character) => character.id !== item.id)
-                                );
+                                axios.delete(`http://localhost:8080/api/rick/collection/${item.id}`)
+                                    .then(() => {
+                                        setRickFavorites((prev) =>
+                                            prev.filter((character) => character.id !== item.id)
+                                        );
+                                    })
+                                    .catch((error) => {
+                                        console.log("Fehler beim Löschen:", error);
+                                    });
                             }}
                         >
                             Aus Favoriten entfernen

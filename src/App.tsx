@@ -12,13 +12,13 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 function App() {
-
+    //Backend-Verfügbarkeitsprüfung (Health Check) einbauen.
+    //Wegen Synchronisierung.
     const [pokemonData, setPokemonData] = useState<any[]>([]);
     const [pokemonError, setPokemonError] = useState("");
     const [pokemonPage, setPokemonPage] = useState(1);
     const [pokemonLoading, setPokemonLoading] = useState(false);
-
-
+    
     const [rickData, setRickData] = useState<any[]>([]);
     const [rickError, setRickError] = useState("");
     const [rickPage, setRickPage] = useState(1);
@@ -48,6 +48,17 @@ function App() {
                 console.log("Fehler beim Laden:", error);
             });
     }, []);
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/api/rick/collection")
+            .then((response) => {
+                setRickFavorites(response.data);
+            })
+            .catch((error) => {
+                console.log("Fehler beim Laden der Rick-&-Morty-Favoriten:", error);
+            });
+    }, []);
+
     return (
         <>
             <NavigationBar/>
