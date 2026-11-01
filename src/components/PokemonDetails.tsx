@@ -1,6 +1,7 @@
 import {useLocation, useNavigate} from "react-router";
 
 import "../styles/PokemonPage.css";
+import axios from "axios";
 
 type Pokemon = {
     id: number;
@@ -86,16 +87,32 @@ export default function PokemonDetails({
                 </button>
                 <button
                     onClick={() => {
-                        setPokemonFavorites((prev) => {
-                            if (prev.some((item) => item.id === pokemon.id)) {
-                                return prev;
-                            }
+                        if (pokemonFavorites.some((item) => item.pokemonId === String(pokemon.id))) {
+                            return;
+                        }
 
-                            return [...prev, pokemon];
-                        });
+                        const favoriteData = {
+                            pokemonId: String(pokemon.id),
+                            pokemonName: pokemon.name,
+                            nickname: pokemon.name,
+                            pictureUrl: pokemon.sprites.other["official-artwork"].front_default,
+                            height: pokemon.height,
+                            weight: pokemon.weight,
+                            types: pokemon.types.map((item: any) => item.type.name)
+                        };
+
+                        axios.post("http://localhost:8080/api/collection", favoriteData)
+                            .then((response) => {
+                                console.log("Gespeichert:", response.data);
+
+                                setPokemonFavorites((prev) => [...prev, response.data]);
+                            })
+                            .catch((error) => {
+                                console.log("Fehler beim Speichern:", error);
+                            });
                     }}
                 >
-                    {pokemonFavorites.some((item) => item.id === pokemon.id)
+                    {pokemonFavorites.some((item) => item.pokemonId === String(pokemon.id))
                         ? "Bereits Favorit"
                         : "Als Favorit speichern"}
                 </button>

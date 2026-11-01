@@ -1,7 +1,6 @@
 import './App.css'
 import NavigationBar from "./NavigationBar.tsx";
 import {Route, Routes} from "react-router"
-import {useState} from "react";
 import PokemonPage from "./components/PokemonPage";
 import RickAndMortyPage from "./components/RickAndMortyPage";
 import RickAndMortyDetails from "./components/RickAndMortyDetails.tsx";
@@ -9,6 +8,8 @@ import PokemonDetails from "./components/PokemonDetails.tsx"
 import Overview from "./components/Overview.tsx";
 import PokemonFavorites from "./components/PokemonFavorits.tsx";
 import RickAndMortyFavorites from "./components/RickAndMortyFavorits.tsx";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 function App() {
 
@@ -23,10 +24,30 @@ function App() {
     const [rickPage, setRickPage] = useState(1);
     const [rickLoading, setRickLoading] = useState(false);
 
-
+    type PokemonFavorite = {
+        id: string;
+        pokemonId: string;
+        nickname: string;
+        pokemonName: string;
+        pictureUrl: string;
+        height: number;
+        weight: number;
+        types: string[];
+    };
     const [pokemonFavorites, setPokemonFavorites] = useState<any[]>([]);
     const [rickFavorites, setRickFavorites] = useState<any[]>([]);
 
+    useEffect(() => {
+        axios.get<PokemonFavorite[]>("http://localhost:8080/api/collection")
+            .then((response) => {
+
+                console.log("Geladene Favoriten:", response.data);
+                setPokemonFavorites(response.data);
+            })
+            .catch((error) => {
+                console.log("Fehler beim Laden:", error);
+            });
+    }, []);
     return (
         <>
             <NavigationBar/>

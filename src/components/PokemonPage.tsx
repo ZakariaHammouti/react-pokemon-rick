@@ -85,9 +85,9 @@ export default function PokemonPage({
                     {data.map((item) => (
                         <article className="card" key={item.id}>
                             <h3>{item.name}</h3>
-                            <img
-                                src={item.sprites.other["official-artwork"].front_default}
-                                alt={item.name}
+                            <img className={"pokemon-image"}
+                                 src={item.sprites.other["official-artwork"].front_default}
+                                 alt={item.name}
                             />
                             <button
                                 className="details-button"

@@ -9,10 +9,12 @@
     text-transform: capitalize;
 }
 
-.pokemon-details img {
-    width: 350px;
-    height: 350px;
+.card img.pokemon-image {
+    width: 180px;
+    height: 180px;
     object-fit: contain;
+    display: block;
+    margin: 10px auto;
 }
 
 .pokemon-details .card-container {
@@ -42,3 +44,4 @@
     color: white;
     cursor: pointer;
 }
+

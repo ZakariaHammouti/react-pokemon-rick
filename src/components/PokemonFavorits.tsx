@@ -1,3 +1,6 @@
+import axios from "axios";
+import '../styles/PokemonPage.css'
+
 type PokemonFavoritesProps = {
     pokemonFavorites: any[];
     setPokemonFavorites: React.Dispatch<React.SetStateAction<any[]>>;
@@ -17,17 +20,29 @@ export default function PokemonFavorites({
             <section className="card-container">
                 {pokemonFavorites.map((item) => (
                     <article className="card" key={item.id}>
-                        <h3>{item.name}</h3>
+                        <h3>{item.nickname}</h3>
 
-                        <img
-                            src={item.sprites.other["official-artwork"].front_default}
-                            alt={item.name}
+                        <img className="pokemon-image"
+                             src={item.pictureUrl}
+                             alt={item.pokemonName}
                         />
+
+                        <p>Name: {item.pokemonName}</p>
+                        <p>Größe: {item.height}</p>
+                        <p>Gewicht: {item.weight}</p>
+                        <p>Typen: {item.types.join(", ")}</p>
+
                         <button
                             onClick={() => {
-                                setPokemonFavorites((prev) =>
-                                    prev.filter((pokemon) => pokemon.id !== item.id)
-                                );
+                                axios.delete(`http://localhost:8080/api/collection/${item.id}`)
+                                    .then(() => {
+                                        setPokemonFavorites((prev) =>
+                                            prev.filter((pokemon) => pokemon.id !== item.id)
+                                        );
+                                    })
+                                    .catch((error) => {
+                                        console.log("Fehler beim Löschen:", error);
+                                    });
                             }}
                         >
                             Aus Favoriten entfernen
